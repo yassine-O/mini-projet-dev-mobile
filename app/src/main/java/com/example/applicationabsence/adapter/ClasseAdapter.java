@@ -54,7 +54,7 @@ public class ClasseAdapter extends RecyclerView.Adapter<ClasseAdapter.ClasseHold
                 @Override
                 public void onClick(View view) {
                     int position = getAdapterPosition();
-                    if (listener != null || position != RecyclerView.NO_POSITION){
+                    if (listener != null || position == RecyclerView.NO_POSITION){
                         listener.onItemClick(classes.get(position));
                     }
                 }

@@ -28,4 +28,12 @@ public class AbsenceViewModel extends AndroidViewModel {
         return this.absenceRepository.getAbsencesEtudiant(etudiantId);
     }
 
+    public void delete(Absence absence){
+        absenceRepository.delete(absence);
+    }
+
+    public void update(Absence absence){
+        absenceRepository.update(absence);
+    }
+
 }

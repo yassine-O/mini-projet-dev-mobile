@@ -12,13 +12,11 @@ public class Absence {
 
     public String date;
 
-    public String observation;
+    public String observation = "";
 
     public int etudiantID;
 
-    public Absence(String date, String observation, int etudiantID) {
+    public Absence(String date) {
         this.date = date;
-        this.observation = observation;
-        this.etudiantID = etudiantID;
     }
 }

@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         fabAddClasse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this, "fab clicked", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Classe> classes) {
                 classeAdapter.setClasses(classes);
-                Toast.makeText(MainActivity.this, classes.get(0).nom, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(MainActivity.this,EtudiantsActivity.class);
                 intent.putExtra(EtudiantsActivity.EXTRA_CLASSE,classe.id);
                 startActivity(intent);
-                Toast.makeText(MainActivity.this, classe.nom+" clicked", Toast.LENGTH_SHORT).show();
             }
         });
 

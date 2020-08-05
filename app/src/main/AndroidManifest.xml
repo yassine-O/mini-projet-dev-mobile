@@ -9,8 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AbsencesActivity"></activity>
-        <activity android:name=".EtudiantsActivity" />
+        <activity android:name=".AbsencesActivity"
+            android:parentActivityName=".EtudiantsActivity"></activity>
+        <activity android:name=".EtudiantsActivity"
+            android:launchMode="singleTask"
+            android:parentActivityName=".MainActivity"/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

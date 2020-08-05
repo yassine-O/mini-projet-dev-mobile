@@ -21,7 +21,8 @@ import java.util.List;
 
 public class EtudiantAdapter extends RecyclerView.Adapter<EtudiantAdapter.EtudiantHolder> {
 
-    List<Etudiant> etudiants = new ArrayList<>();
+    private List<Etudiant> etudiants = new ArrayList<>();
+    private OnItemLongClickListener longClickListener;
 
     @NonNull
     @Override
@@ -72,7 +73,26 @@ public class EtudiantAdapter extends RecyclerView.Adapter<EtudiantAdapter.Etudia
             super(itemView);
             textViewEtudiant = itemView.findViewById(R.id.textView_etudiant);
             aSwitch = itemView.findViewById(R.id.switch_button);
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int position = getAdapterPosition();
+                    if (longClickListener != null || position == RecyclerView.NO_POSITION){
+                        longClickListener.onItemLongClick(etudiants.get(position));
+                    }
+                    return false;
+                }
+            });
         }
+    }
+
+    public interface OnItemLongClickListener{
+        void onItemLongClick(Etudiant etudiant);
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener longClickListener){
+        this.longClickListener = longClickListener;
     }
 
 }

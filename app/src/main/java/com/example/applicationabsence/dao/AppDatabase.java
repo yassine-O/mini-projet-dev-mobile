@@ -9,10 +9,15 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
+import com.example.applicationabsence.entity.Absence;
 import com.example.applicationabsence.entity.Classe;
 import com.example.applicationabsence.entity.Etudiant;
 
-@Database(entities = {Classe.class, Etudiant.class}, version = 1)
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+@Database(entities = {Classe.class, Etudiant.class, Absence.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase instance;
@@ -44,10 +49,12 @@ public abstract class AppDatabase extends RoomDatabase {
 
         private ClasseDao classeDao;
         private EtudiantDao etudiantDao;
+        private AbsenceDao absenceDao;
 
         public PopulateDbAsyncTask(AppDatabase db) {
             classeDao = db.classeDao();
             etudiantDao = db.etudiantDao();
+            absenceDao = db.absenceDao();
         }
 
         @Override
@@ -63,6 +70,11 @@ public abstract class AppDatabase extends RoomDatabase {
             etudiantDao.insert(new Etudiant("info1",1));
             etudiantDao.insert(new Etudiant("info2",1));
             etudiantDao.insert(new Etudiant("cp1",2));
+
+            Date todayDate = Calendar.getInstance().getTime();
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            String todayString = formatter.format(todayDate);
+
 
             return null;
         }

@@ -15,17 +15,23 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.applicationabsence.adapter.EtudiantAdapter;
+import com.example.applicationabsence.entity.Absence;
 import com.example.applicationabsence.entity.Etudiant;
+import com.example.applicationabsence.viewmodel.AbsenceViewModel;
 import com.example.applicationabsence.viewmodel.EtudiantViewModel;
 import com.example.applicationabsence.viewmodel.factory.ViewModelFactory;
 
+import java.util.Date;
 import java.util.List;
 
 public class EtudiantsActivity extends AppCompatActivity {
 
     public static final String EXTRA_CLASSE = "extra_classe";
+    public static final String EXTRA_ETUDIANT = "extra_etudiant";
+    public static final String EXTRA_ETUDIANT_NOM = "extra_etudiant_nom";
 
     private EtudiantViewModel etudiantViewModel;
+    private AbsenceViewModel absenceViewModel;
     private EtudiantAdapter adapter;
     private int classeId;
 
@@ -37,6 +43,8 @@ public class EtudiantsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         classeId = intent.getIntExtra(EXTRA_CLASSE,-1);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         RecyclerView recyclerView = findViewById(R.id.recycler_view_etudiants);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -44,15 +52,24 @@ public class EtudiantsActivity extends AppCompatActivity {
         adapter = new EtudiantAdapter();
         recyclerView.setAdapter(adapter);
 
+        absenceViewModel = new ViewModelProvider(this, new ViewModelFactory(getApplication())).get(AbsenceViewModel.class);
         etudiantViewModel = new ViewModelProvider(this, new ViewModelFactory(getApplication())).get(EtudiantViewModel.class);
         etudiantViewModel.getEtidiants(classeId).observe(this, new Observer<List<Etudiant>>() {
             @Override
             public void onChanged(List<Etudiant> etudiants) {
                 adapter.setEtudiants(etudiants);
-                Toast.makeText(EtudiantsActivity.this, "etidiant activity open---"+classeId+"---", Toast.LENGTH_SHORT).show();
             }
         });
-
+        
+        adapter.setOnItemLongClickListener(new EtudiantAdapter.OnItemLongClickListener() {
+            @Override
+            public void onItemLongClick(Etudiant etudiant) {
+                Intent intent = new Intent(EtudiantsActivity.this, AbsencesActivity.class);
+                intent.putExtra(EXTRA_ETUDIANT,etudiant.id);
+                intent.putExtra(EXTRA_ETUDIANT_NOM,etudiant.nom);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -75,8 +92,13 @@ public class EtudiantsActivity extends AppCompatActivity {
 
     void saveEtudiantsAbsence(){
         List<Etudiant> selectedEtudiants = adapter.getSelected();
+        String currentDate = java.text.DateFormat.getDateInstance().format(new Date());
+        Absence absence = new Absence(currentDate);
         for (Etudiant etd : selectedEtudiants){
-            Toast.makeText(this, etd.nom, Toast.LENGTH_SHORT).show();
+            absence.etudiantID = etd.id;
+            absenceViewModel.insert(absence);
         }
+        finish();
+        Toast.makeText(this, "Absense bien notée", Toast.LENGTH_SHORT).show();
     }
 }
