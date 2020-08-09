@@ -2,6 +2,7 @@ package com.example.applicationabsence;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -33,17 +34,22 @@ public class EtudiantsActivity extends AppCompatActivity {
     private EtudiantViewModel etudiantViewModel;
     private AbsenceViewModel absenceViewModel;
     private EtudiantAdapter adapter;
-    private int classeId;
+    private long classeId;
+    private String classeNom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_etudiants);
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
         Intent intent = getIntent();
-        classeId = intent.getIntExtra(EXTRA_CLASSE,-1);
+        classeId = intent.getLongExtra(EXTRA_CLASSE,-1);
+        classeNom = intent.getStringExtra(EXTRA_ETUDIANT_NOM);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        setTitle(classeNom);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_etudiants);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

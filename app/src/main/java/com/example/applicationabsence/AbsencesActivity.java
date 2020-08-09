@@ -1,16 +1,14 @@
 package com.example.applicationabsence;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.IBinder;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,6 +32,8 @@ public class AbsencesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_absences);
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
         Intent intent = getIntent();
         etudiantId = intent.getIntExtra(EtudiantsActivity.EXTRA_ETUDIANT,-1);
         etudiantNom = intent.getStringExtra(EtudiantsActivity.EXTRA_ETUDIANT_NOM);
@@ -42,6 +42,7 @@ public class AbsencesActivity extends AppCompatActivity {
         textViewNom.setText(etudiantNom);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
+        setTitle("Resumé d'absence");
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view_absence);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

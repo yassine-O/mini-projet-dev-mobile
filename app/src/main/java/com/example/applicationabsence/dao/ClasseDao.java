@@ -13,7 +13,7 @@ import java.util.List;
 public interface ClasseDao {
 
     @Insert
-    void insert(Classe classe);
+    long insert(Classe classe);
 
     @Query("select * from classe")
     LiveData<List<Classe>> getAllClasses();

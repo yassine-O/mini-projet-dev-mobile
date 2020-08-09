@@ -13,12 +13,12 @@ public class Etudiant {
 
     public String nom;
 
-    public int classeID;
+    public long classeID;
 
     @Ignore
     public boolean ischecked = false;
 
-    public Etudiant(String nom, int classeID) {
+    public Etudiant(String nom, long classeID) {
         this.nom = nom;
         this.classeID = classeID;
     }

@@ -16,6 +16,6 @@ public interface EtudiantDao {
     void insert(Etudiant etudiant);
 
     @Query("select * from etudiant where classeID = :classeId")
-    LiveData<List<Etudiant>> getClasseEtudiants(int classeId);
+    LiveData<List<Etudiant>> getClasseEtudiants(long classeId);
 
 }

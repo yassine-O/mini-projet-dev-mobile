@@ -25,7 +25,7 @@ public class EtudiantRepository {
         new InsertEtudiantAsyncTask(etudiantDao).execute(etudiant);
     }
 
-    public LiveData<List<Etudiant>> getEtudiants(int classeId){
+    public LiveData<List<Etudiant>> getEtudiants(long classeId){
         return etudiantDao.getClasseEtudiants(classeId);
     }
 

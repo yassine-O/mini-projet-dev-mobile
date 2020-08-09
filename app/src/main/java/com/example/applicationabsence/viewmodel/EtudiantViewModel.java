@@ -24,7 +24,7 @@ public class EtudiantViewModel extends AndroidViewModel {
         this.etudiantRepository.insert(etudiant);
     }
 
-    public LiveData<List<Etudiant>> getEtidiants(int classeId){
+    public LiveData<List<Etudiant>> getEtidiants(long classeId){
         return this.etudiantRepository.getEtudiants(classeId);
     }
 

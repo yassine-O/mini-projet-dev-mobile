@@ -1,18 +1,15 @@
 package com.example.applicationabsence.adapter;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.applicationabsence.EtudiantsActivity;
 import com.example.applicationabsence.R;
 import com.example.applicationabsence.entity.Etudiant;
 
@@ -40,6 +37,12 @@ public class EtudiantAdapter extends RecyclerView.Adapter<EtudiantAdapter.Etudia
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 etudiants.get(position).ischecked = b;
+                if (b) {
+                    compoundButton.setText("Absent");
+                }
+                else {
+                    compoundButton.setText("");
+                }
             }
         });
     }

@@ -10,6 +10,7 @@ import com.example.applicationabsence.dao.ClasseDao;
 import com.example.applicationabsence.entity.Classe;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class ClasseRepository {
 
@@ -22,8 +23,8 @@ public class ClasseRepository {
         allClasses = classeDao.getAllClasses();
     }
 
-    public void insert(Classe classe){
-        new InsertClasseAsyncTask(classeDao).execute(classe);
+    public long insert(Classe classe) throws Exception {
+        return new InsertClasseAsyncTask(classeDao).execute(classe).get();
     }
 
     public LiveData<List<Classe>> getAllClasses(){
@@ -31,7 +32,7 @@ public class ClasseRepository {
     }
 
 
-    private static class InsertClasseAsyncTask extends AsyncTask<Classe, Void, Void> {
+    private static class InsertClasseAsyncTask extends AsyncTask<Classe, Void, Long> {
 
         private ClasseDao classeDao;
 
@@ -40,9 +41,8 @@ public class ClasseRepository {
         }
 
         @Override
-        protected Void doInBackground(Classe... classes) {
-            classeDao.insert(classes[0]);
-            return null;
+        protected Long doInBackground(Classe... classes) {
+            return classeDao.insert(classes[0]);
         }
     }
 
